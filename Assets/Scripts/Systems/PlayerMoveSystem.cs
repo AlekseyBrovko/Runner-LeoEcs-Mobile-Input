@@ -6,7 +6,7 @@ namespace Client
 {
     sealed class PlayerMoveSystem : IEcsRunSystem 
     {
-        readonly EcsFilterInject<Inc<PlayerMoveComponent, Player>> _filter = default; //фильтр отбирает компоненты на которых есть Move и Player
+        readonly EcsFilterInject<Inc<PlayerMoveComponent, Player>> _filter = default; //пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ Move пїЅ Player
         
         readonly EcsPoolInject<PlayerMoveComponent> _movePool = default;
         readonly EcsPoolInject<ViewComponent> _viewPool = default;
@@ -31,8 +31,8 @@ namespace Client
                 //inputComp.moveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, 0);                
                 //viewComp.Rigidbody.MovePosition(viewComp.Transform.position + Vector3.forward * moveComp.ForwardSpeed * Time.deltaTime + inputComp.moveInput * moveComp.SideSpeed * Time.deltaTime);
 
-                //мобильный
-                inputComp.moveInput = new Vector3(touchEvent.Direction.x * touchEvent.Velocity.x, 0, 0);
+                //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+                inputComp.moveInput = new Vector3(touchEvent.Direction.x * touchEvent.Velocity.x * moveComp.SideSpeed, 0, 0);
                 viewComp.Rigidbody.MovePosition(viewComp.Transform.position + Vector3.forward * moveComp.ForwardSpeed * Time.deltaTime + inputComp.moveInput * Time.deltaTime);
             }
         }

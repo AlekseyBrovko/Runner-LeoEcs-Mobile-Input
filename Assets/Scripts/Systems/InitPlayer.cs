@@ -7,23 +7,23 @@ namespace Client
     {
         public void Init (EcsSystems systems) 
         {
-            var go = GameObject.FindGameObjectWithTag("Player"); //поиск игрока на сцене
+            var go = GameObject.FindGameObjectWithTag("Player"); //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 
-            var world = systems.GetWorld(); // ссылка на мир
-            var entity = world.NewEntity(); // создание новой сущности
+            var world = systems.GetWorld(); // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅ
+            var entity = world.NewEntity(); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
             world.GetPool<Player>().Add(entity);
 
-            ref var moveComp = ref world.GetPool<PlayerMoveComponent>().Add(entity); // добавление сущности в пул Move
-            moveComp.ForwardSpeed = 15;
+            ref var moveComp = ref world.GetPool<PlayerMoveComponent>().Add(entity); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅ Move
+            moveComp.ForwardSpeed = 8;
 
             ref var viewComp = ref world.GetPool<ViewComponent>().Add(entity);
-            viewComp.Transform = go.transform; // сохранили ссылку на transform объекта
+            viewComp.Transform = go.transform; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ transform пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
             viewComp.Rigidbody = go.GetComponent<Rigidbody>();
 
             ref var inputComp = ref world.GetPool<PlayerInputComponent>().Add(entity);
-            moveComp.SideSpeed = 10005f;
+            moveComp.SideSpeed = .7f;
             
             var coins = go.GetComponent<CoinTrigger>();
             coins.World = world;

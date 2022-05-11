@@ -9,12 +9,13 @@ namespace Client
     sealed class EcsStartup : MonoBehaviour
     {
         EcsSystems _systems;
+        EcsSystems _fixedUpdate;
         [SerializeField] private Text coinText;
         [SerializeField] private GameObject finishPanel;
 
         void Start () 
         {
-            
+            EcsWorld world = new EcsWorld ();
             GameState state = new GameState();
             state.CoinsValueText = coinText;
             state.finishPanel = finishPanel;
@@ -22,21 +23,25 @@ namespace Client
             // register your shared data here, for example:
             // var shared = new Shared ();
             // systems = new EcsSystems (new EcsWorld (), shared);
-            _systems = new EcsSystems (new EcsWorld (), state);
+
+            _systems = new EcsSystems (world, state);
+            _fixedUpdate = new EcsSystems (world, state);
+            _fixedUpdate.Add (new PlayerMoveSystem());
+            _fixedUpdate.Add (new FinishSystem());
+            _fixedUpdate.Add (new CameraFollowSystem());
+            _fixedUpdate.Inject();
+            _fixedUpdate.Init ();
             _systems
                 //updateSystems = new EcsSystems (new EcsWorld(), state)
+                
                 .Add(new InitPlayer())
-                .Add(new InputSystem())
-                .Add(new PlayerMoveSystem())
-                
-                .Add(new CameraFollowSystem())
+                .Add(new InputSystem())                
                 .Add(new CoinsSystem())
-                .Add(new FinishSystem())
                 
-
-
+                //.Add(new CameraFollowSystem())
+                //.Add(new PlayerMoveSystem())
+                //.Add(new FinishSystem())
                 // .Add (new TestSystem2 ())
-
                 // register additional worlds here, for example:
                 // .AddWorld (new EcsWorld (), "events")
 #if UNITY_EDITOR
@@ -56,7 +61,7 @@ namespace Client
 
         private void FixedUpdate()
         {
-            
+            _fixedUpdate.Run();
         }
 
         void OnDestroy () {
